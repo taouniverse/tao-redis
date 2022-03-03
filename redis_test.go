@@ -21,8 +21,9 @@ import (
 )
 
 func TestTao(t *testing.T) {
-	tao.SetConfigPath("./test.yaml")
+	err := tao.SetConfigPath("./test.yaml")
+	assert.Nil(t, err)
 
-	err := tao.Run(nil, nil)
+	err = tao.Run(nil, nil)
 	assert.Nil(t, err)
 }
