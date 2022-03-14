@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tao_redis
+package redis
 
 import (
 	"github.com/stretchr/testify/assert"

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tao_redis
+package redis
 
 import (
 	"context"
@@ -32,14 +32,14 @@ var Rdb redis.UniversalClient
 func setup() (err error) {
 	// setup
 	Rdb = redis.NewUniversalClient(&redis.UniversalOptions{
-		Addrs:            r.Addrs,
-		DB:               r.DB,
-		Username:         r.Username,
-		Password:         r.Password,
-		SentinelPassword: r.SentinelPassword,
-		PoolSize:         r.MaxPoolSize,
-		MinIdleConns:     r.MinPoolSize,
-		MasterName:       r.MasterName,
+		Addrs:            R.Addrs,
+		DB:               R.DB,
+		Username:         R.Username,
+		Password:         R.Password,
+		SentinelPassword: R.SentinelPassword,
+		PoolSize:         R.MaxPoolSize,
+		MinIdleConns:     R.MinPoolSize,
+		MasterName:       R.MasterName,
 	})
 	// ping pong
 	timeout, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)

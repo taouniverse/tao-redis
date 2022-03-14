@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tao_redis
+package redis
 
 import (
 	"context"
@@ -23,8 +23,8 @@ import (
 // ConfigKey for this repo
 const ConfigKey = "redis"
 
-// RedisConfig implements tao.Config
-type RedisConfig struct {
+// Config implements tao.Config
+type Config struct {
 	Addrs            []string `json:"addrs"`
 	MasterName       string   `json:"masterName,omitempty"`
 	MaxPoolSize      int      `json:"maxPoolSize"`
@@ -33,23 +33,23 @@ type RedisConfig struct {
 	Password         string   `json:"password,omitempty"`
 	SentinelPassword string   `json:"sentinelPassword,omitempty"`
 	DB               int      `json:"db"`
-	RunAfter_        []string `json:"run_after,omitempty"`
+	RunAfters        []string `json:"run_after,omitempty"`
 }
 
-var defaultRedis = &RedisConfig{
+var defaultRedis = &Config{
 	Addrs:       []string{"localhost:6379"},
 	MaxPoolSize: 50,
 	MinPoolSize: 5,
-	RunAfter_:   []string{},
+	RunAfters:   []string{},
 }
 
 // Default config
-func (r *RedisConfig) Default() tao.Config {
+func (r *Config) Default() tao.Config {
 	return defaultRedis
 }
 
 // ValidSelf with some default values
-func (r *RedisConfig) ValidSelf() {
+func (r *Config) ValidSelf() {
 	if r.Addrs == nil || len(r.Addrs) == 0 {
 		r.Addrs = defaultRedis.Addrs
 	}
@@ -59,13 +59,13 @@ func (r *RedisConfig) ValidSelf() {
 	if r.MinPoolSize == 0 {
 		r.MinPoolSize = defaultRedis.MinPoolSize
 	}
-	if r.RunAfter_ == nil {
-		r.RunAfter_ = defaultRedis.RunAfter_
+	if r.RunAfters == nil {
+		r.RunAfters = defaultRedis.RunAfters
 	}
 }
 
 // ToTask transform itself to Task
-func (r *RedisConfig) ToTask() tao.Task {
+func (r *Config) ToTask() tao.Task {
 	return tao.NewTask(
 		ConfigKey,
 		func(ctx context.Context, param tao.Parameter) (tao.Parameter, error) {
@@ -92,6 +92,6 @@ func (r *RedisConfig) ToTask() tao.Task {
 }
 
 // RunAfter defines pre task names
-func (r *RedisConfig) RunAfter() []string {
-	return r.RunAfter_
+func (r *Config) RunAfter() []string {
+	return r.RunAfters
 }

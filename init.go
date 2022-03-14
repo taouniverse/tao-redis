@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tao_redis
+package redis
 
 import (
 	"encoding/json"
@@ -20,28 +20,30 @@ import (
 )
 
 /**
-import _ "github.com/taouniverse/tao_redis"
+import _ "github.com/taouniverse/tao-redis"
 */
-var r *RedisConfig
+
+// R config of redis
+var R *Config
 
 func init() {
 	err := tao.Register(ConfigKey, func() error {
 		// 1. transfer config bytes to object
 		bytes, err := tao.GetConfigBytes(ConfigKey)
 		if err != nil {
-			r = r.Default().(*RedisConfig)
+			R = R.Default().(*Config)
 		} else {
-			err = json.Unmarshal(bytes, &r)
+			err = json.Unmarshal(bytes, &R)
 			if err != nil {
 				return err
 			}
 		}
 
 		// redis config
-		r.ValidSelf()
+		R.ValidSelf()
 
 		// 2. set object to tao
-		err = tao.SetConfig(ConfigKey, r)
+		err = tao.SetConfig(ConfigKey, R)
 		if err != nil {
 			return err
 		}
