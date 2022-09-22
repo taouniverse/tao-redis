@@ -26,12 +26,12 @@ const ConfigKey = "redis"
 // Config implements tao.Config
 type Config struct {
 	Addrs            []string `json:"addrs"`
-	MasterName       string   `json:"masterName,omitempty"`
-	MaxPoolSize      int      `json:"maxPoolSize"`
-	MinPoolSize      int      `json:"minPoolSize"`
+	MasterName       string   `json:"master_name,omitempty"`
+	MaxPoolSize      int      `json:"max_pool_size"`
+	MinPoolSize      int      `json:"min_pool_size"`
 	Username         string   `json:"username,omitempty"`
 	Password         string   `json:"password,omitempty"`
-	SentinelPassword string   `json:"sentinelPassword,omitempty"`
+	SentinelPassword string   `json:"sentinel_password,omitempty"`
 	DB               int      `json:"db"`
 	RunAfters        []string `json:"run_after,omitempty"`
 }
@@ -43,9 +43,9 @@ var defaultRedis = &Config{
 	RunAfters:   []string{},
 }
 
-// Default config
-func (r *Config) Default() tao.Config {
-	return defaultRedis
+// Name of Config
+func (r *Config) Name() string {
+	return ConfigKey
 }
 
 // ValidSelf with some default values

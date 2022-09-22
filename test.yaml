@@ -1,4 +1,4 @@
 redis:
   addrs: [ localhost:6379 ]
-  maxPoolSize: 20
-  minPoolSize: 1
+  max_pool_size: 20
+  min_pool_size: 1

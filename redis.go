@@ -21,6 +21,20 @@ import (
 	"time"
 )
 
+/**
+import _ "github.com/taouniverse/tao-redis"
+*/
+
+// R config of redis
+var R = new(Config)
+
+func init() {
+	err := tao.Register(ConfigKey, R, setup)
+	if err != nil {
+		panic(err.Error())
+	}
+}
+
 // Rdb to describe redis db client
 // 1. If the MasterName option is specified, a sentinel-backed FailoverClient is returned.
 // 2. if the number of Addrs is two or more, a ClusterClient is returned.
