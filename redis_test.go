@@ -15,14 +15,22 @@
 package redis
 
 import (
+	"context"
 	"github.com/stretchr/testify/assert"
 	"github.com/taouniverse/tao"
 	"testing"
+	"time"
 )
 
 func TestTao(t *testing.T) {
 	err := tao.SetConfigPath("./test.yaml")
 	assert.Nil(t, err)
+
+	timeout, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancelFunc()
+
+	ping := Rdb.Ping(timeout)
+	assert.Nil(t, ping.Err())
 
 	err = tao.Run(nil, nil)
 	assert.Nil(t, err)
