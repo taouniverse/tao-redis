@@ -1,0 +1,12 @@
+redis:
+  default_instance: master
+  master:
+    addrs: [ localhost:6379 ]
+    max_pool_size: 20
+    min_pool_size: 1
+    db: 0
+  replica:
+    addrs: [ localhost:6379 ]
+    max_pool_size: 20
+    min_pool_size: 1
+    db: 1
