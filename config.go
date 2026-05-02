@@ -55,7 +55,8 @@ func (r *Config) Name() string {
 
 // ValidSelf with some default values
 func (r *Config) ValidSelf() {
-	for name, instance := range r.Instances {
+	for i := range r.Instances {
+		instance := &r.Instances[i].Cfg
 		if len(instance.Addrs) == 0 {
 			instance.Addrs = defaultInstance.Addrs
 		}
@@ -65,7 +66,6 @@ func (r *Config) ValidSelf() {
 		if instance.MinPoolSize == 0 {
 			instance.MinPoolSize = defaultInstance.MinPoolSize
 		}
-		r.Instances[name] = instance
 	}
 	if r.RunAfters == nil {
 		r.RunAfters = []string{}
@@ -82,7 +82,8 @@ func (r *Config) ToTask() tao.Task {
 				return param, tao.NewError(tao.ContextCanceled, "%s: context has been canceled", ConfigKey)
 			default:
 			}
-			for name := range r.Instances {
+			for _, inst := range r.Instances {
+				name := inst.Name
 				client, err := Factory.Get(name)
 				if err != nil {
 					return param, err

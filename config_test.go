@@ -24,16 +24,16 @@ import (
 func TestConfig(t *testing.T) {
 	r := &Config{
 		BaseMultiConfig: tao.BaseMultiConfig[InstanceConfig]{
-			Instances: map[string]InstanceConfig{
-				"default": {},
+			Instances: []tao.Instance[InstanceConfig]{
+				{Name: "default", Cfg: InstanceConfig{}},
 			},
 		},
 	}
 	r.ValidSelf()
 
-	instance := r.Instances["default"]
+	instance, _ := r.GetInstanceByName("default")
 	assert.Equal(t, []string{"localhost:6379"}, instance.Addrs)
-	assert.Equal(t, 50, instance.MaxPoolSize)
+	assert.Equal(t, 0, instance.DB)
 
 	t.Log(r.RunAfter())
 	t.Log(r.ToTask())
