@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/stretchr/testify v1.11.1
-	github.com/taouniverse/tao v0.2.1
+	github.com/taouniverse/tao v0.2.3
 )
 
 require (
